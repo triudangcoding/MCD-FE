@@ -30,6 +30,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 import { Badge } from '../ui/badge';
 // Removed app-specific BranchSelect usage for mock-only Sidebar
+import { BranchSelect } from '@/components/global/branch-select';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -306,6 +307,8 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
       <div className="flex-1 overflow-hidden">
         <ScrollArea className="h-full" isHiddenScrollBar={true}>
           <div className="space-y-2 py-4">
+            {/* Branch Selector */}
+            <BranchSelect collapsed={collapsed} />
             <Separator className="mx-3" />
 
             {/* Main Navigation Group */}

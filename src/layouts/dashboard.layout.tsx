@@ -10,9 +10,8 @@ import { cn } from "@/lib/utils";
 const SIDEBAR_STORAGE_KEY = "sidebar_collapsed_state";
 const NAVBAR_HEIGHT = 64; // 16 * 4 = 64px (h-16)
 
-const AppLayout: React.FC = () => {
+const DashboardLayout: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
-    // Initialize from localStorage on first render (only if not mobile)
     if (typeof window !== "undefined") {
       const savedState = localStorage.getItem(SIDEBAR_STORAGE_KEY);
       if (savedState !== null) {
@@ -252,4 +251,4 @@ const AppLayout: React.FC = () => {
   );
 };
 
-export default AppLayout;
+export default DashboardLayout;
