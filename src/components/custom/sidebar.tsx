@@ -79,7 +79,7 @@ function SidebarGroup({ title, items, collapsed, renderMenuItem, defaultExpanded
   };
 
   return (
-    <div className="px-1">
+    <div className="px-1 ">
       <AnimatePresence mode="wait">
         {!collapsed && (
           <motion.div
@@ -93,7 +93,7 @@ function SidebarGroup({ title, items, collapsed, renderMenuItem, defaultExpanded
               variant="ghost"
               size="sm"
               onClick={toggleExpanded}
-              className="w-full px-3 py-2 h-auto justify-start hover:bg-accent/50 transition-colors duration-150"
+              className="w-full px-3 py-2 mb-1 h-auto justify-start hover:bg-accent/50 transition-colors duration-150"
             >
               <div className="flex items-center justify-between w-full">
                 <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -335,8 +335,6 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
                 renderMenuItem={renderMenuItem}
               />
             )}
-
-         
           </div>
         </ScrollArea>
       </div>
