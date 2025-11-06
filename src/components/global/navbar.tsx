@@ -409,19 +409,6 @@ export function Navbar({ sidebarCollapsed, isMobile, onMenuClick, showSidebar }:
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate('/demo-ui')} className="text-blue-400 focus:text-blue-400">
-                <Home className="mr-2 h-4 w-4" />
-                <span>Demo Component</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate('/demo/turn-algorithm')} className="text-purple-400 focus:text-purple-400">
-                <Brain className="mr-2 h-4 w-4" />
-                <span>Demo Turn Algorithm</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate('/test-fcm')} className="text-orange-400 focus:text-orange-400">
-                <Smartphone className="mr-2 h-4 w-4" />
-                <span>Test FCM</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout} className="text-rose-400 focus:text-rose-400">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
