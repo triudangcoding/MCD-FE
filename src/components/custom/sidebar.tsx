@@ -79,7 +79,7 @@ function SidebarGroup({ title, items, collapsed, renderMenuItem, defaultExpanded
   };
 
   return (
-    <div className="px-2">
+    <div className="px-1">
       <AnimatePresence mode="wait">
         {!collapsed && (
           <motion.div
@@ -278,10 +278,10 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
               className="flex items-center space-x-3"
             >
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-primary-foreground font-bold text-sm">D</span>
+                <span className="text-primary-foreground font-bold text-sm">SM</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-foreground font-semibold text-sm">NAILISM</span>
+                <span className="text-foreground font-semibold text-sm">ISIMILE</span>
                 <span className="text-muted-foreground text-xs">Dashboard</span>
               </div>
             </motion.div>
@@ -336,21 +336,7 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
               />
             )}
 
-            {filteredManagementItems.length > 0 && filteredSystemItems.length > 0 && (
-              <Separator className="mx-3" />
-            )}
-
-            {/* System Group */}
-            {filteredSystemItems.length > 0 && (
-              <SidebarGroup
-                title="System"
-                items={filteredSystemItems}
-                collapsed={collapsed}
-                isMobile={isMobile}
-                renderMenuItem={renderMenuItem}
-                defaultExpanded={false}
-              />
-            )}
+         
           </div>
         </ScrollArea>
       </div>
