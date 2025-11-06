@@ -5,13 +5,13 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.1450 0 0);
+  --foreground: oklch(0.3500 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.1450 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.1450 0 0);
   --primary: oklch(0.6230 0.2140 259.8150);
-  --primary-foreground: oklch(0.9850 0 0);
+  --primary-foreground: oklch(0.9850 0 0);  
   --secondary: oklch(0.9700 0 0);
   --secondary-foreground: oklch(0.2050 0 0);
   --muted: oklch(0.9700 0 0);
@@ -29,7 +29,7 @@
   --chart-4: oklch(0.4900 0.2200 264);
   --chart-5: oklch(0.4200 0.1800 266);
   --sidebar: oklch(0.9850 0 0);
-  --sidebar-foreground: oklch(0.1450 0 0);
+  --sidebar-foreground: oklch(0.3000 0 0);
   --sidebar-primary: oklch(0.2050 0 0);
   --sidebar-primary-foreground: oklch(0.9850 0 0);
   --sidebar-accent: oklch(0.9700 0 0);
@@ -322,16 +322,16 @@ body {
 
 /* Force text color trong light mode */
 :root .custom-toast {
-  color: #1f2937 !important;
-  /* Gray-800 for better contrast in light mode */
+  color: #6b7280 !important;
+  /* Gray-500 for a softer look in light mode */
 }
 
 :root .custom-toast .Toastify__toast-body {
-  color: #1f2937 !important;
+  color: #6b7280 !important;
 }
 
 :root .custom-toast .Toastify__toast-body>div {
-  color: #1f2937 !important;
+  color: #6b7280 !important;
 }
 
 /* Dark mode keeps the CSS variable */
