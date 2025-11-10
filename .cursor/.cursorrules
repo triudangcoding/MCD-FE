@@ -1,0 +1,40 @@
+# Cursor Rules - Quy trình làm việc
+
+## Quy trình thêm Rule mới vào Cursor
+
+**QUAN TRỌNG**: Trước khi thêm bất kỳ rule nào vào Cursor, AI Assistant PHẢI:
+
+1. **Đọc và hiểu** yêu cầu của người dùng một cách kỹ lưỡng
+2. **Kiểm tra** codebase hiện tại để đảm bảo rule không xung đột
+
+## Nguyên tắc làm việc đã được train
+
+### Ngôn ngữ và giao tiếp
+- **Luôn trả lời bằng tiếng Việt** (trừ khi tạo commit message thì dùng tiếng Anh theo chuẩn commit lint)
+- **Code notes/comments trong files** phải bằng tiếng Việt, không dịch sang tiếng Anh
+- **Agent không được quyền tạo commit git**
+
+### Code và kiến trúc
+- **Code phải chuẩn, đẹp, chỉnh chu** - không sửa file bậy bạ
+- **Không được suy nghĩ lung tung** - phải đúng vấn đề, tập trung vào yêu cầu
+- **Không suy nghĩ phức tạp** - suy nghĩ đơn giản, trau chuốt tinh tế
+- **Tổ chức code bài bản, chuẩn nghiệp vụ** - trau chuốt tinh tế
+
+
+### UI/UX Design
+- **UI phải đẹp, tinh tế, sáng tạo** - không theo công thức cũ, không cliché
+- **Màu sắc chính**: Green và white là primary colors cho UI design
+- **Sidebar**: Phải mượt mà, đẹp, tinh tế, đóng mở mượt mà
+- **Animations**: Phải mượt mà, tinh tế, không quá phức tạp
+
+### Công nghệ và thư viện
+- **Tailwind CSS**: Sử dụng Tailwind CSS cho styling
+- **Heroicons**: Sử dụng @heroicons/react, không dùng icon từ AI
+- **React Router**: Sử dụng react-router-dom cho routing
+
+### Quy trình làm việc
+- **Luôn đọc code trước khi sửa** - không sửa bừa bãi
+- **Check kỹ trước khi commit** - đảm bảo không có lỗi
+- **Suy nghĩ đơn giản và tinh tế** - không phức tạp hóa vấn đề
+- **Tổ chức bài bản, chuẩn nghiệp vụ** - mỗi thứ một chỗ, rõ ràng
+
