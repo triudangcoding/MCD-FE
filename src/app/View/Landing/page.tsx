@@ -7,7 +7,7 @@ const LandingPage: React.FC = () => {
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
       {/* Navbar */}
       <Navbar />
-
+      
       {/* Hero Section with Hyperspeed Background */}
       <section className="relative h-screen w-full">
         {/* Hyperspeed Background */}
@@ -53,8 +53,8 @@ const LandingPage: React.FC = () => {
           />
         </div>
 
-        {/* Hero Content Overlay */}
-        <div className="relative z-10 flex items-center justify-center h-full pt-16 md:pt-20">
+        {/* Hero Content Overlay - pointer-events-none để cho phép click vào Hyperspeed */}
+        <div className="relative z-10 flex items-center justify-center h-full pt-20 md:pt-24 pointer-events-none">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {/* Animated Title */}
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 animate-fade-in-up">
@@ -72,7 +72,7 @@ const LandingPage: React.FC = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50">
+              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 pointer-events-auto">
                 <span className="relative z-10 flex items-center space-x-2">
                   <span>Get Started</span>
                   <svg
@@ -92,7 +92,7 @@ const LandingPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
 
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-semibold text-lg hover:bg-white/20 transition-all duration-300 hover:scale-105">
+              <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-semibold text-lg hover:bg-white/20 transition-all duration-300 hover:scale-105 pointer-events-auto">
                 Learn More
               </button>
             </div>
@@ -102,7 +102,7 @@ const LandingPage: React.FC = () => {
               {['Fast', 'Modern', 'Responsive', 'Beautiful'].map((feature, index) => (
                 <div
                   key={feature}
-                  className="px-6 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-white text-sm font-medium hover:bg-white/10 transition-all duration-300 hover:scale-110 cursor-pointer"
+                  className="px-6 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-white text-sm font-medium hover:bg-white/10 transition-all duration-300 hover:scale-110 cursor-pointer pointer-events-auto"
                   style={{ animationDelay: `${600 + index * 100}ms` }}
                 >
                   {feature}
