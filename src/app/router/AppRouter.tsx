@@ -6,16 +6,19 @@ import Users from "../../modules/users/Users";
 import Settings from "../../modules/settings/Settings";
 import UserLoginpage from "../../modules/Auth/User/Loginpage";
 import AdminLoginpage from "../../modules/Auth/Admin/Loginpage";
+import LandingPage from "../View/Landing/page";
 
 export default function AppRouter() {
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
+      
       {/* Login routes - không có layout */}
       <Route path="/login" element={<UserLoginpage />} />
       <Route path="/admin/login" element={<AdminLoginpage />} />
-      
+
       {/* Admin routes - có MainLayout với Sidebar */}
-      <Route path="/" element={<MainLayout />}>
+      <Route path="/admin" element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="users" element={<Users />} />
