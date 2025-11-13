@@ -66,7 +66,7 @@ export default function Loginpage() {
 
   const transitionClass = "transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.24,0.82,0.25,1)]";
   const inputSharedClass =
-    "block w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 bg-white/70 backdrop-blur-sm text-gray-800 placeholder-gray-400 shadow-sm transition-all duration-300 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-white";
+    "block w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -186,7 +186,7 @@ export default function Loginpage() {
           {/* Form */}
           <div
             ref={formWrapperRef}
-            className="relative overflow-hidden rounded-2xl bg-white/80 px-6 py-6 sm:px-8 sm:py-8 transition-[height] duration-500 ease-[cubic-bezier(0.24,0.82,0.25,1)]"
+            className="relative overflow-hidden transition-[height] duration-500 ease-[cubic-bezier(0.24,0.82,0.25,1)]"
           >
             <div
               className={`${transitionClass} transform-gpu ${mode === "login"
@@ -236,7 +236,7 @@ export default function Loginpage() {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className={`${inputSharedClass} pr-12`}
+                      className="block w-full pl-12 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/50 backdrop-blur-sm text-gray-800 placeholder-gray-400"
                       placeholder="Nhập mật khẩu"
                       disabled={isLoading}
                     />
@@ -253,25 +253,6 @@ export default function Loginpage() {
                       )}
                     </button>
                   </div>
-                </div>
-
-                {/* Remember & Forgot */}
-                <div className="flex items-center justify-between">
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 text-green-600 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-white"
-                    />
-                    <span className="ml-2 text-sm text-gray-600">
-                      Ghi nhớ đăng nhập
-                    </span>
-                  </label>
-                  <a
-                    href="#"
-                    className="text-sm text-green-600 hover:text-green-700 font-medium transition-colors duration-200"
-                  >
-                    Quên mật khẩu?
-                  </a>
                 </div>
 
                 {/* Submit Button */}
@@ -438,7 +419,7 @@ export default function Loginpage() {
                 <button
                   type="submit"
                   disabled={isRegisterLoading}
-                  className="w-full bg-gradient-to-r from-emerald-400 via-green-500 to-green-600 text-white py-3.5 px-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-emerald-400 via-green-500 to-green-600 text-white py-3.5 px-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2"
                 >
                   {isRegisterLoading ? (
                     <>
