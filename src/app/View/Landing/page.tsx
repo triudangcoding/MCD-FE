@@ -4,7 +4,7 @@ import Navbar from '../../../shared/components/Navbar';
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black">
+    <div className="relative min-h-screen w-full overflow-hidden bg-black dark:bg-gray-950">
       {/* Navbar */}
       <Navbar />
       

@@ -7,6 +7,7 @@ import {
   ChevronDoubleRightIcon,
   ChevronDoubleLeftIcon,
 } from "@heroicons/react/24/outline";
+import DarkModeToggle from './drakmode';
 
 interface NavItem {
   label: string;
@@ -15,9 +16,9 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Dashboard", icon: HomeIcon, path: "/dashboard" },
-  { label: "Users", icon: UsersIcon, path: "/users" },
-  { label: "Settings", icon: Cog6ToothIcon, path: "/settings" },
+  { label: "Dashboard", icon: HomeIcon, path: "/admin/dashboard" },
+  { label: "Users", icon: UsersIcon, path: "/admin/users" },
+  { label: "Settings", icon: Cog6ToothIcon, path: "/admin/settings" },
 ];
 
 interface SidebarProps {
@@ -38,14 +39,14 @@ export default function Sidebar({ children }: SidebarProps) {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Sidebar */}
       <aside
         className={`
           relative
           flex flex-col
-          bg-gradient-to-b from-white to-gray-50
-          border-r border-gray-200
+          bg-gradient-to-b from-white to-gray-50 dark:from-gray-800 dark:to-gray-900
+          border-r border-gray-200 dark:border-gray-700
           shadow-lg
           transition-all duration-500 ease-in-out
           ${isOpen ? "w-72" : "w-28"}
@@ -62,13 +63,13 @@ export default function Sidebar({ children }: SidebarProps) {
             z-20
             w-6 h-16
             flex flex-col items-center justify-center gap-1
-            bg-white
-            border border-gray-200
+            bg-white dark:bg-gray-800
+            border border-gray-200 dark:border-gray-700
             rounded-r-xl
             shadow-lg
             transition-all duration-300 ease-in-out
-            hover:bg-gray-50
-            hover:border-green-300
+            hover:bg-gray-50 dark:hover:bg-gray-700
+            hover:border-green-300 dark:hover:border-green-600
             hover:shadow-xl
             hover:scale-105
             active:scale-95
@@ -78,9 +79,9 @@ export default function Sidebar({ children }: SidebarProps) {
         >
           {/* Toggle Icon */}
           {isOpen ? (
-            <ChevronDoubleLeftIcon className="w-4 h-4 text-gray-400 group-hover:text-green-500 transition-all duration-300" />
+            <ChevronDoubleLeftIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-green-500 dark:group-hover:text-green-400 transition-all duration-300" />
           ) : (
-            <ChevronDoubleRightIcon className="w-4 h-4 text-gray-400 group-hover:text-green-500 transition-all duration-300" />
+            <ChevronDoubleRightIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-green-500 dark:group-hover:text-green-400 transition-all duration-300" />
           )}
         </button>
 
@@ -88,7 +89,7 @@ export default function Sidebar({ children }: SidebarProps) {
         <div className={`
           relative
           flex items-center
-          border-b border-gray-200 bg-white
+          border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800
           transition-all duration-300 ease-in-out
           ${isOpen ? "justify-start p-5" : "justify-center px-3 py-3"}
         `}>
@@ -109,16 +110,16 @@ export default function Sidebar({ children }: SidebarProps) {
             </div>
             <span
               className={`
-                text-xl font-bold text-gray-800 whitespace-nowrap
+                text-xl font-bold text-gray-800 dark:text-gray-100 whitespace-nowrap
                 transition-all duration-300 ease-in-out
-                ${isOpen 
-                  ? "opacity-100 translate-x-0 w-auto" 
+                ${isOpen
+                  ? "opacity-100 translate-x-0 w-auto"
                   : "opacity-0 w-0 overflow-hidden"
                 }
               `}
             >
               HKSMS
-            </span> 
+            </span>
           </button>
         </div>
 
@@ -131,7 +132,7 @@ export default function Sidebar({ children }: SidebarProps) {
           {navItems.map((item, index) => {
             const isActive = location.pathname === item.path;
             const IconComponent = item.icon;
-            
+
             return (
               <NavLink
                 key={item.label}
@@ -142,14 +143,13 @@ export default function Sidebar({ children }: SidebarProps) {
                   rounded-xl
                   transition-all duration-300 ease-in-out
                   relative
-                  ${isOpen 
-                    ? "px-4 py-3 gap-4 justify-start" 
+                  ${isOpen
+                    ? "px-4 py-3 gap-4 justify-start"
                     : "px-0 py-2.5 justify-center"
                   }
-                  ${
-                    isActive
-                      ? "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md"
-                      : "text-gray-700 hover:bg-gradient-to-r hover:from-green-50/50 hover:to-white hover:text-green-700"
+                  ${isActive
+                    ? "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-gradient-to-r hover:from-green-50/50 hover:to-white dark:hover:from-green-900/20 dark:hover:to-gray-800 hover:text-green-700 dark:hover:text-green-400"
                   }
                 `}
                 style={{
@@ -160,20 +160,20 @@ export default function Sidebar({ children }: SidebarProps) {
                 {!isActive && (
                   <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-green-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                 )}
-                
+
                 {/* Icon */}
                 <div
                   className={`
                     relative z-10 flex-shrink-0 transition-transform duration-300
-                    ${isActive 
-                      ? "scale-110" 
+                    ${isActive
+                      ? "scale-110"
                       : "group-hover:scale-110 group-hover:text-green-600"
                     }
                   `}
                 >
                   <IconComponent className="w-5 h-5" />
                 </div>
-                
+
                 {/* Label */}
                 <span
                   className={`
@@ -181,15 +181,15 @@ export default function Sidebar({ children }: SidebarProps) {
                     font-medium
                     whitespace-nowrap
                     transition-all duration-300 ease-in-out
-                    ${isOpen 
-                      ? "opacity-100 translate-x-0 w-auto" 
+                    ${isOpen
+                      ? "opacity-100 translate-x-0 w-auto"
                       : "opacity-0 w-0 overflow-hidden absolute"
                     }
                   `}
                 >
                   {item.label}
                 </span>
-                
+
                 {/* Active indicator - chỉ hiển thị khi mở */}
                 {isOpen && isActive && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-white/30 rounded-r-full" />
@@ -203,22 +203,34 @@ export default function Sidebar({ children }: SidebarProps) {
         </nav>
 
         {/* Footer */}
-        <div 
+        <div
           className={`
-            p-4 border-t border-gray-200 bg-white
+            p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800
             transition-all duration-300 ease-in-out
           `}
         >
+          {/* Dark Mode Toggle */}
+          <div className={`
+            flex items-center justify-center mb-3
+            transition-all duration-300 ease-in-out
+            ${isOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-2 pointer-events-none h-0"
+            }
+          `}>
+            <DarkModeToggle />
+          </div>
+          
           <div
             className={`
               transition-all duration-300 ease-in-out
-              ${isOpen 
-                ? "opacity-100 translate-y-0" 
+              ${isOpen
+                ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-2 pointer-events-none h-0"
               }
             `}
           >
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
               © 2025 HKSMS
             </p>
           </div>
@@ -226,7 +238,7 @@ export default function Sidebar({ children }: SidebarProps) {
       </aside>
 
       {/* Content Area */}
-      <main className="flex-1 overflow-y-auto bg-gray-50">
+      <main className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900">
         {children}
       </main>
     </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import DarkModeToggle from './drakmode';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -17,9 +18,9 @@ const Navbar: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Users', path: '/users' },
-    { name: 'Settings', path: '/settings' },
+    { name: 'Dashboard', path: 'admin/dashboard' },
+    { name: 'Users', path: 'admin/users' },
+    { name: 'Settings', path: 'admin/settings' },
   ];
 
   const isActivePath = (path: string) => {
@@ -93,8 +94,9 @@ const Navbar: React.FC = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button & Dark Mode Toggle */}
           <div className="hidden md:flex items-center space-x-4">
+            <DarkModeToggle />
             <Link
               to="/auth/login"
               className="relative px-6 py-2.5 text-sm font-semibold text-white rounded-lg overflow-hidden group"
@@ -182,7 +184,11 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
           
-          <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-800 space-y-3">
+            <div className="flex items-center justify-between px-4">
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+              <DarkModeToggle />
+            </div>
             <Link
               to="/auth/login"
               onClick={() => setIsMobileMenuOpen(false)}

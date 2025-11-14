@@ -2,6 +2,132 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS Variables cho dark mode transitions */
+:root {
+  --theme-transition-duration: 0.3s;
+  --theme-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* View Transition cho dark mode - siêu mượt! */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--theme-transition-duration);
+  animation-timing-function: var(--theme-transition-timing);
+  mix-blend-mode: normal;
+}
+
+/* Root element */
+html {
+  @apply bg-gray-50 dark:bg-gray-900;
+  color-scheme: light dark;
+}
+
 body {
-  @apply bg-gray-50 text-gray-800;
+  @apply bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100;
+}
+
+/* Smooth transitions cho dark mode - tối ưu performance */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-timing);
+}
+
+/* Tối ưu performance với will-change */
+html.theme-transitioning * {
+  will-change: background-color, border-color, color;
+}
+
+html.theme-transitioning::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: transparent;
+  animation: theme-fade 0.3s ease-in-out;
+}
+
+@keyframes theme-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+/* Loại trừ animations có sẵn */
+[class*="animate-"],
+[style*="animation"] {
+  transition: none !important;
+}
+
+/* Tối ưu cho các elements quan trọng */
+nav, aside, main, header, footer,
+.bg-white, .dark\:bg-gray-800,
+.bg-gray-50, .dark\:bg-gray-900 {
+  transition: 
+    background-color var(--theme-transition-duration) var(--theme-transition-timing),
+    border-color var(--theme-transition-duration) var(--theme-transition-timing),
+    color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Tối ưu đặc biệt cho text để tránh flickering */
+h1, h2, h3, h4, h5, h6, p, span, a, button, label, input, textarea, select {
+  transition: 
+    color var(--theme-transition-duration) var(--theme-transition-timing),
+    background-color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Đảm bảo shadows cũng transition mượt */
+[class*="shadow"] {
+  transition: 
+    background-color var(--theme-transition-duration) var(--theme-transition-timing),
+    border-color var(--theme-transition-duration) var(--theme-transition-timing),
+    box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Tối ưu cho borders */
+[class*="border"] {
+  transition: 
+    border-color var(--theme-transition-duration) var(--theme-transition-timing),
+    background-color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Tối ưu cho icons và SVG */
+svg {
+  transition: 
+    fill var(--theme-transition-duration) var(--theme-transition-timing),
+    stroke var(--theme-transition-duration) var(--theme-transition-timing),
+    color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Smooth cho cards và panels */
+[class*="rounded"] {
+  transition: 
+    background-color var(--theme-transition-duration) var(--theme-transition-timing),
+    border-color var(--theme-transition-duration) var(--theme-transition-timing),
+    box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Tối ưu cho tables */
+table, thead, tbody, tr, th, td {
+  transition: 
+    background-color var(--theme-transition-duration) var(--theme-transition-timing),
+    border-color var(--theme-transition-duration) var(--theme-transition-timing),
+    color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Tối ưu cho gradients - quan trọng! */
+[class*="bg-gradient"],
+[class*="from-"],
+[class*="to-"],
+[class*="via-"] {
+  transition: 
+    opacity var(--theme-transition-duration) var(--theme-transition-timing),
+    filter var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Performance hints */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }
