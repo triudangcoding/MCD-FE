@@ -1,18 +1,76 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Hyperspeed from './Hyperspeed';
 import Navbar from '../../../shared/components/Navbar';
+import DarkModeToggle from '../../../shared/components/drakmode';
+import { useTheme } from '../../../providers/ThemeProvider';
 
 const LandingPage: React.FC = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  // Màu sắc thay đổi theo theme - Tinh tế và nổi bật
+  const hyperspeedColors = useMemo(() => {
+    if (isDark) {
+      // Dark mode - Màu neon đậm, sống động
+      return {
+        roadColor: 0x0a0a0a,              // Đen đậm
+        islandColor: 0x151515,             // Xám đen
+        background: 0x000000,              // Đen tuyền
+        shoulderLines: 0x00FF88,           // Xanh lá neon
+        brokenLines: 0x00FF88,             // Xanh lá neon
+        leftCars: [0xFF0066, 0xFF1493, 0xFF69B4],    // Hồng neon đậm
+        rightCars: [0x00FF88, 0x00E676, 0x00C853],   // Xanh lá neon đậm
+        sticks: 0x00FF88,                  // Xanh lá neon
+      };
+    } else {
+      // Light mode - Màu đậm nhưng tinh tế
+      return {
+        roadColor: 0xF8F9FA,               // Xám rất nhạt
+        islandColor: 0xE9ECEF,             // Xám nhạt
+        background: 0xFFFFFF,              // Trắng
+        shoulderLines: 0x00A152,           // Xanh lá đậm
+        brokenLines: 0x00A152,             // Xanh lá đậm
+        leftCars: [0xE91E63, 0xF50057, 0xFF4081],    // Hồng đậm
+        rightCars: [0x00BFA5, 0x00897B, 0x00695C],   // Xanh lá/teal đậm
+        sticks: 0x00897B,                  // Xanh teal đậm
+      };
+    }
+  }, [isDark]);
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black dark:bg-gray-950">
+    <div className={`relative min-h-screen w-full overflow-hidden transition-colors duration-500 ${
+      isDark ? 'bg-black' : 'bg-gray-50'
+    }`}>
       {/* Navbar */}
       <Navbar />
       
+      {/* Floating Dark Mode Toggle - Fixed Position */}
+      <div className="fixed bottom-8 right-8 z-50 group">
+        <div className="relative">
+          {/* Glow effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300 scale-110"></div>
+          
+          {/* Toggle button with label */}
+          <div className="relative bg-white dark:bg-gray-800 rounded-full p-3 shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:scale-110">
+            <DarkModeToggle />
+          </div>
+          
+          {/* Tooltip */}
+          <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <div className="bg-gray-900 dark:bg-gray-700 text-white text-xs rounded-lg px-3 py-2 whitespace-nowrap shadow-lg">
+              Toggle Theme
+              <div className="absolute top-full right-6 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Hero Section with Hyperspeed Background */}
       <section className="relative h-screen w-full">
-        {/* Hyperspeed Background */}
+        {/* Hyperspeed Background - với màu thay đổi theo theme */}
         <div className="absolute inset-0 z-0">
           <Hyperspeed
+            key={theme} // Force re-render khi theme thay đổi
             effectOptions={{
               onSpeedUp: () => { },
               onSlowDown: () => { },
@@ -39,16 +97,7 @@ const LandingPage: React.FC = () => {
               carWidthPercentage: [0.3, 0.5],
               carShiftX: [-0.8, 0.8],
               carFloorSeparation: [0, 5],
-              colors: {
-                roadColor: 0x080808,
-                islandColor: 0x0a0a0a,
-                background: 0x000000,
-                shoulderLines: 0xFFFFFF,
-                brokenLines: 0xFFFFFF,
-                leftCars: [0xD856BF, 0x6750A2, 0xC247AC],
-                rightCars: [0x03B3C3, 0x0E5EA5, 0x324555],
-                sticks: 0x03B3C3,
-              }
+              colors: hyperspeedColors
             }}
           />
         </div>
@@ -58,14 +107,18 @@ const LandingPage: React.FC = () => {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {/* Animated Title */}
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 animate-fade-in-up">
-              <span className="block text-white mb-2">Welcome to the</span>
+              <span className={`block mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                Welcome to the
+              </span>
               <span className="block bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
                 Future of Design
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+            <p className={`text-lg sm:text-xl mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200 ${
+              isDark ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               Experience cutting-edge UI/UX with stunning animations and seamless interactions. 
               Built with modern technologies for the next generation of web applications.
             </p>
@@ -92,7 +145,11 @@ const LandingPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
 
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-semibold text-lg hover:bg-white/20 transition-all duration-300 hover:scale-105 pointer-events-auto">
+              <button className={`px-8 py-4 backdrop-blur-md border rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 pointer-events-auto ${
+                isDark 
+                  ? 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                  : 'bg-gray-900/10 border-gray-900/20 text-gray-900 hover:bg-gray-900/20'
+              }`}>
                 Learn More
               </button>
             </div>
@@ -102,7 +159,11 @@ const LandingPage: React.FC = () => {
               {['Fast', 'Modern', 'Responsive', 'Beautiful'].map((feature, index) => (
                 <div
                   key={feature}
-                  className="px-6 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-white text-sm font-medium hover:bg-white/10 transition-all duration-300 hover:scale-110 cursor-pointer pointer-events-auto"
+                  className={`px-6 py-2 backdrop-blur-sm border rounded-full text-sm font-medium transition-all duration-300 hover:scale-110 cursor-pointer pointer-events-auto ${
+                    isDark
+                      ? 'bg-white/5 border-white/10 text-white hover:bg-white/10'
+                      : 'bg-gray-900/5 border-gray-900/10 text-gray-900 hover:bg-gray-900/10'
+                  }`}
                   style={{ animationDelay: `${600 + index * 100}ms` }}
                 >
                   {feature}
@@ -114,8 +175,12 @@ const LandingPage: React.FC = () => {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
-            <div className="w-1 h-3 bg-white/50 rounded-full animate-scroll"></div>
+          <div className={`w-6 h-10 border-2 rounded-full flex justify-center p-2 ${
+            isDark ? 'border-white/30' : 'border-gray-900/30'
+          }`}>
+            <div className={`w-1 h-3 rounded-full animate-scroll ${
+              isDark ? 'bg-white/50' : 'bg-gray-900/50'
+            }`}></div>
           </div>
         </div>
       </section>
