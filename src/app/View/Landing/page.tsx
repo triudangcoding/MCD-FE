@@ -102,9 +102,15 @@ const LandingPage: React.FC = () => {
           />
         </div>
 
-        {/* Hero Content Overlay - pointer-events-none để cho phép click vào Hyperspeed */}
+        {/* Hero Content Overlay - Text Area riêng biệt để có thể select/copy */}
         <div className="relative z-10 flex items-center justify-center h-full pt-20 md:pt-24 pointer-events-none">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Text Content Area - có thể select text */}
+          <div 
+            className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center pointer-events-auto select-text"
+            onMouseDown={(e) => e.stopPropagation()}
+            onTouchStart={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Animated Title */}
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 animate-fade-in-up">
               <span className={`block mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -125,7 +131,7 @@ const LandingPage: React.FC = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up animation-delay-400">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 pointer-events-auto">
+              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50">
                 <span className="relative z-10 flex items-center space-x-2">
                   <span>Get Started</span>
                   <svg
@@ -145,7 +151,7 @@ const LandingPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
 
-              <button className={`px-8 py-4 backdrop-blur-md border rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 pointer-events-auto ${
+              <button className={`px-8 py-4 backdrop-blur-md border rounded-full font-semibold text-lg transition-all duration-300 hover:scale-105 ${
                 isDark 
                   ? 'bg-white/10 border-white/20 text-white hover:bg-white/20'
                   : 'bg-gray-900/10 border-gray-900/20 text-gray-900 hover:bg-gray-900/20'
@@ -159,7 +165,7 @@ const LandingPage: React.FC = () => {
               {['Fast', 'Modern', 'Responsive', 'Beautiful'].map((feature, index) => (
                 <div
                   key={feature}
-                  className={`px-6 py-2 backdrop-blur-sm border rounded-full text-sm font-medium transition-all duration-300 hover:scale-110 cursor-pointer pointer-events-auto ${
+                  className={`px-6 py-2 backdrop-blur-sm border rounded-full text-sm font-medium transition-all duration-300 hover:scale-110 cursor-pointer ${
                     isDark
                       ? 'bg-white/5 border-white/10 text-white hover:bg-white/10'
                       : 'bg-gray-900/5 border-gray-900/10 text-gray-900 hover:bg-gray-900/10'
@@ -174,7 +180,7 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce pointer-events-none">
           <div className={`w-6 h-10 border-2 rounded-full flex justify-center p-2 ${
             isDark ? 'border-white/30' : 'border-gray-900/30'
           }`}>
@@ -246,6 +252,32 @@ const LandingPage: React.FC = () => {
 
         .animation-delay-600 {
           animation-delay: 600ms;
+        }
+
+        /* Text selection styles */
+        .select-text {
+          user-select: text;
+          -webkit-user-select: text;
+          -moz-user-select: text;
+          -ms-user-select: text;
+        }
+
+        .select-text * {
+          user-select: text;
+          -webkit-user-select: text;
+          -moz-user-select: text;
+          -ms-user-select: text;
+        }
+
+        /* Ensure gradient text can be selected */
+        .select-text .bg-clip-text {
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .select-text .bg-clip-text::selection {
+          -webkit-text-fill-color: initial;
+          background-clip: initial;
         }
       `}</style>
     </div>
