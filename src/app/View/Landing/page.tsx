@@ -8,31 +8,31 @@ const LandingPage: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  // Màu sắc thay đổi theo theme - Tinh tế và nổi bật
+  // Màu sắc thay đổi theo theme - Road nổi bật với contrast cao
   const hyperspeedColors = useMemo(() => {
     if (isDark) {
-      // Dark mode - Màu neon đậm, sống động
+      // Dark mode - Giữ nguyên màu cũ (base colors)
       return {
-        roadColor: 0x0a0a0a,              // Đen đậm
-        islandColor: 0x151515,             // Xám đen
+        roadColor: 0x1a1a1a,               // Xám đậm - road nổi bật
+        islandColor: 0x0d0d0d,             // Xám đen - island
         background: 0x000000,              // Đen tuyền
-        shoulderLines: 0x00FF88,           // Xanh lá neon
-        brokenLines: 0x00FF88,             // Xanh lá neon
-        leftCars: [0xFF0066, 0xFF1493, 0xFF69B4],    // Hồng neon đậm
-        rightCars: [0x00FF88, 0x00E676, 0x00C853],   // Xanh lá neon đậm
-        sticks: 0x00FF88,                  // Xanh lá neon
+        shoulderLines: 0xFFFFFF,           // Trắng - giữ nguyên
+        brokenLines: 0xFFFFFF,             // Trắng - giữ nguyên
+        leftCars: [0xD856BF, 0x6750A2, 0xC247AC],    // Hồng/tím nhạt - giữ nguyên
+        rightCars: [0x03B3C3, 0x0E5EA5, 0x324555],   // Xanh dương nhạt - giữ nguyên
+        sticks: 0x03B3C3,                  // Xanh cyan - giữ nguyên
       };
     } else {
-      // Light mode - Màu đậm nhưng tinh tế
+      // Light mode - Màu hồng ĐẬM và xanh lá ĐẬM (vibrant/neon)
       return {
-        roadColor: 0xF8F9FA,               // Xám rất nhạt
-        islandColor: 0xE9ECEF,             // Xám nhạt
+        roadColor: 0xAAAAAA,               // Xám đậm hơn - road nổi bật
+        islandColor: 0xCCCCCC,             // Xám nhạt - island tạo contrast
         background: 0xFFFFFF,              // Trắng
-        shoulderLines: 0x00A152,           // Xanh lá đậm
-        brokenLines: 0x00A152,             // Xanh lá đậm
-        leftCars: [0xE91E63, 0xF50057, 0xFF4081],    // Hồng đậm
-        rightCars: [0x00BFA5, 0x00897B, 0x00695C],   // Xanh lá/teal đậm
-        sticks: 0x00897B,                  // Xanh teal đậm
+        shoulderLines: 0x00FF00,           // Xanh lá neon đậm
+        brokenLines: 0x00FF00,             // Xanh lá neon đậm
+        leftCars: [0xFF0080, 0xFF1493, 0xFF69B4],    // Hồng neon đậm
+        rightCars: [0x00FF00, 0x00E676, 0x00C853],   // Xanh lá neon đậm
+        sticks: 0x00E676,                  // Xanh lá sáng
       };
     }
   }, [isDark]);
