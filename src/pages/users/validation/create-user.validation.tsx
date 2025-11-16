@@ -44,4 +44,12 @@ export const userCreateFormSchema = z.object({
                 message: "Password must contain at least one uppercase letter, one lowercase letter, and one number",
             }
         ),
+    gender: z
+        .enum(["male", "female", "other"], {
+            message: "Gender is required",
+        }),
+    role: z
+        .enum(["super_admin", "manager", "staff", "casher"], {
+            message: "Role is required",
+        }),
 });
