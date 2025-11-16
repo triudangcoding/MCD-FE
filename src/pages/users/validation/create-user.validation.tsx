@@ -56,4 +56,15 @@ export const userCreateFormSchema = z.object({
         .enum(["super_admin", "manager", "staff", "casher"], {
             message: "Role is required",
         }),
+    avatar: z
+        .instanceof(File, { message: "Avatar must be a valid image file" })
+        .refine(
+            (file) => file.type?.startsWith("image/"),
+            { message: "Avatar must be an image file (PNG, JPG, JPEG, GIF, WEBP)" }
+        )
+        .refine(
+            (file) => file.size <= 10 * 1024 * 1024, // 10MB
+            { message: "Avatar size must not exceed 10MB" }
+        )
+        .optional(),
 });

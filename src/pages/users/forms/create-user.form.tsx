@@ -57,6 +57,7 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { userCreateFormSchema } from "@/pages/users/validation/create-user.validation";
+import FileUpload from "@/components/custom/file-upload";
 
 interface CreateUserFormProps {
     open: boolean;
@@ -77,6 +78,7 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
             password: "",
             gender: undefined,
             role: undefined,
+            avatar: undefined,
         },
     });
 
@@ -271,6 +273,31 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                                                     <SelectItem value="casher">Casher</SelectItem>
                                                 </SelectContent>
                                             </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="avatar"
+                                    render={({ field }) => (
+                                        <FormItem className="col-span-12 col-start-auto pb-4">
+                                            <FormLabel>Avatar</FormLabel>
+                                            <FormControl>
+                                                <FileUpload
+                                                    onFileSelect={(file) => {
+                                                        field.onChange(file);
+                                                    }}
+                                                    onFileError={(error) => {
+                                                        form.setError("avatar", {
+                                                            type: "manual",
+                                                            message: error,
+                                                        });
+                                                    }}
+                                                    currentFile={field.value || null}
+                                                    maxFileSize={10 * 1024 * 1024} // 10MB
+                                                />
+                                            </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
