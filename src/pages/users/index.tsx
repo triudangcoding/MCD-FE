@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { FilterPopover, type FilterOption, type FilterItem } from '@/components/custom/filter.popover';
+import { FilterPopover, type FilterItem } from '@/components/custom/filter.popover';
 import { USER_FILTER_OPTIONS } from '@/pages/users/user.constant';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
@@ -577,77 +577,78 @@ export default function UsersManagementPage() {
       </div>
 
       {/* Pagination - Fixed */}
-      <div className="mt-4 flex-shrink-0">
-        <Card className="bg-card text-card-foreground flex flex-col gap-2 rounded-xl border py-4 shadow-sm">
-          <CardContent className="px-2">
-            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center justify-center sm:justify-start gap-2">
-                <span className="text-sm text-muted-foreground">Show</span>
-                <Select
-                  value={itemsPerPage.toString()}
-                  onValueChange={(value) => {
-                    setItemsPerPage(Number(value));
-                    setCurrentPage(1);
-                  }}
-                >
-                  <SelectTrigger size="sm" className="w-16">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="10">10</SelectItem>
-                    <SelectItem value="15">15</SelectItem>
-                    <SelectItem value="20">20</SelectItem>
-                    <SelectItem value="30">30</SelectItem>
-                  </SelectContent>
-                </Select>
-                <span className="text-sm text-muted-foreground">per page</span>
-              </div>
-              <div className="flex items-center justify-center">
-                <span className="text-sm text-muted-foreground">
-                  Page {currentPage} of {totalPages || 1}
-                </span>
-              </div>
-              <div className="flex items-center justify-center gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(1)}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronsLeft className="h-4 w-4" />
-                  <span className="hidden sm:inline ml-1">First</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-                  disabled={currentPage === 1}
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  <span className="hidden sm:inline ml-1">Prev</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-                  disabled={currentPage === totalPages}
-                >
-                  <span className="hidden sm:inline mr-1">Next</span>
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(totalPages)}
-                  disabled={currentPage === totalPages}
-                >
-                  <span className="hidden sm:inline mr-1">Last</span>
-                  <ChevronsRight className="h-4 w-4" />
-                </Button>
-              </div>
+      <div className="mt-3 flex-shrink-0">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between rounded-lg border bg-card px-3 py-2.5 shadow-sm">
+          <div className="flex items-center justify-center sm:justify-start gap-1.5">
+            <span className="text-xs text-muted-foreground">Show</span>
+            <Select
+              value={itemsPerPage.toString()}
+              onValueChange={(value) => {
+                setItemsPerPage(Number(value));
+                setCurrentPage(1);
+              }}
+            >
+              <SelectTrigger size="sm" className="h-7 w-16 px-2 text-xs">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="15">15</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="30">30</SelectItem>
+              </SelectContent>
+            </Select>
+            <span className="text-xs text-muted-foreground">per page</span>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-xs font-medium text-muted-foreground">
+              {currentPage} / {totalPages || 1}
+            </span>
+            <div className="h-3 w-px bg-border" />
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => setCurrentPage(1)}
+                disabled={currentPage === 1}
+              >
+                <ChevronsLeft className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline ml-1">First</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline ml-1">Prev</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                disabled={currentPage === totalPages}
+              >
+                <span className="hidden sm:inline mr-1">Next</span>
+                <ChevronRight className="h-3.5 w-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 px-2 text-xs"
+                onClick={() => setCurrentPage(totalPages)}
+                disabled={currentPage === totalPages}
+              >
+                <span className="hidden sm:inline mr-1">Last</span>
+                <ChevronsRight className="h-3.5 w-3.5" />
+              </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
