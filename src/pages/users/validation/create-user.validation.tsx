@@ -11,10 +11,11 @@ export const userCreateFormSchema = z.object({
         .min(1, { message: "Email is required" })
         .email({ message: "Invalid email format" }),
     dateOfBirth: z
-        .date({
-            message: "Invalid date format",
-        })
-        .optional()
+        .union([z.date(), z.undefined()])
+        .refine(
+            (date) => date !== undefined,
+            { message: "Date of birth is required" }
+        )
         .refine(
             (date) => {
                 if (!date) return true;
@@ -33,7 +34,8 @@ export const userCreateFormSchema = z.object({
                 return date >= minAge;
             },
             { message: "Date of birth is invalid" }
-        ),
+        )
+        .transform((date) => date as Date),
     password: z
         .string()
         .min(1, { message: "Password is required" })

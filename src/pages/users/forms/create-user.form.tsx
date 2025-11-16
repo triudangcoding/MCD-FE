@@ -93,7 +93,7 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                         className="flex flex-col flex-1 overflow-hidden"
                     >
                         <div className="space-y-8 @container flex-1 overflow-y-auto">
-                            <div className="grid grid-cols-12 gap-4 mx-1">
+                            <div className="grid grid-cols-12 gap-4 mx-1 items-stretch">
                                 <FormField
                                     control={form.control}
                                     name="fullname"
@@ -171,7 +171,9 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                                                     </PopoverContent>
                                                 </Popover>
                                             </FormControl>
-                                            <FormMessage />
+                                            <div className="min-h-[1.25rem]">
+                                                <FormMessage />
+                                            </div>
                                         </FormItem>
                                     )}
                                 />
@@ -194,7 +196,9 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                                                     <SelectItem value="other">Other</SelectItem>
                                                 </SelectContent>
                                             </Select>
-                                            <FormMessage />
+                                            <div className="min-h-[1.25rem]">
+                                                <FormMessage />
+                                            </div>
                                         </FormItem>
                                     )}
                                 />
