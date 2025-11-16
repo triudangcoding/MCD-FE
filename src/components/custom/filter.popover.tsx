@@ -81,13 +81,8 @@ export function FilterPopover({
       <PopoverTrigger asChild>
         <Button
           type="button"
-          variant="outline"
+          variant="dashed-info"
           size="sm"
-          className={`border-2 border-dashed ${
-            hasActiveFilters
-              ? 'border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950 dark:text-blue-300'
-              : 'border-blue-500 text-blue-700 bg-background dark:border-blue-400 dark:text-blue-400'
-          } shadow-xs hover:bg-blue-50 hover:text-blue-800 hover:shadow-sm focus-visible:ring-blue-500/20 dark:hover:bg-blue-950 dark:hover:text-blue-300 ${className || ''}`}
         >
           <Funnel className="h-4 w-4" />
           {triggerLabel}
