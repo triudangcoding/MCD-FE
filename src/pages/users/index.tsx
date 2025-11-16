@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { FilterPopover, type FilterOption, type FilterItem } from '@/components/custom/filter.popover';
 import { USER_FILTER_OPTIONS } from '@/pages/users/user.constant';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // Mock data types
 interface User {
@@ -582,19 +583,23 @@ export default function UsersManagementPage() {
             <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center justify-center sm:justify-start gap-2">
                 <span className="text-sm text-muted-foreground">Show</span>
-                <select
-                  className="flex items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-16 h-8"
-                  value={itemsPerPage}
-                  onChange={(e) => {
-                    setItemsPerPage(Number(e.target.value));
+                <Select
+                  value={itemsPerPage.toString()}
+                  onValueChange={(value) => {
+                    setItemsPerPage(Number(value));
                     setCurrentPage(1);
                   }}
                 >
-                  <option value={10}>10</option>
-                  <option value={15}>15</option>
-                  <option value={20}>20</option>
-                  <option value={30}>30</option>
-                </select>
+                  <SelectTrigger size="sm" className="w-16">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="10">10</SelectItem>
+                    <SelectItem value="15">15</SelectItem>
+                    <SelectItem value="20">20</SelectItem>
+                    <SelectItem value="30">30</SelectItem>
+                  </SelectContent>
+                </Select>
                 <span className="text-sm text-muted-foreground">per page</span>
               </div>
               <div className="flex items-center justify-center">
