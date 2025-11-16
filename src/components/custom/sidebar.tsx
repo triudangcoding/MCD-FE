@@ -254,11 +254,11 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
         {!collapsed && (
           <div className="flex items-center space-x-3 transition-opacity duration-150">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
-              <span className="text-primary-foreground font-bold text-sm">SM</span>
+              <span className="text-primary-foreground font-bold text-sm">UK</span>
             </div>
             <div className="flex flex-col">
               <span className="text-foreground font-semibold text-sm">
-                ISIMILE
+                UNIKO
               </span>
               <span className="text-muted-foreground text-xs">
                 Dashboard
