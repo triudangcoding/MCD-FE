@@ -12,29 +12,31 @@ export const userCreateFormSchema = z.object({
         .email({ message: "Invalid email format" }),
     dateOfBirth: z
         .union([z.date(), z.undefined()])
-        .refine(
-            (date) => date !== undefined,
-            { message: "Date of birth is required" }
-        )
-        .refine(
-            (date) => {
-                if (!date) return true;
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                return date <= today;
-            },
-            { message: "Date of birth cannot be in the future" }
-        )
-        .refine(
-            (date) => {
-                if (!date) return true;
-                const today = new Date();
-                const minAge = new Date();
-                minAge.setFullYear(today.getFullYear() - 120);
-                return date >= minAge;
-            },
-            { message: "Date of birth is invalid" }
-        )
+        .superRefine((date, ctx) => {
+            if (date === undefined) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "Date of birth is required",
+                });
+                return;
+            }
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (date > today) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "Date of birth cannot be in the future",
+                });
+            }
+            const minAge = new Date();
+            minAge.setFullYear(today.getFullYear() - 120);
+            if (date < minAge) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "Date of birth is invalid",
+                });
+            }
+        })
         .transform((date) => date as Date),
     password: z
         .string()

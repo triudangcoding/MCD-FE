@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import {
     InputGroup,
     InputGroupInput,
@@ -45,6 +46,16 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { userCreateFormSchema } from "@/pages/users/validation/create-user.validation";
 
 interface CreateUserFormProps {
@@ -53,9 +64,11 @@ interface CreateUserFormProps {
 }
 
 export default function CreateUserForm({ open, onOpenChange }: CreateUserFormProps) {
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
+    type FormInput = z.input<typeof userCreateFormSchema>;
 
-    const form = useForm<z.infer<typeof userCreateFormSchema>>({
+    const form = useForm<FormInput>({
         resolver: zodResolver(userCreateFormSchema),
         defaultValues: {
             fullname: "",
@@ -67,8 +80,21 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
         },
     });
 
-    function onSubmit(values: z.infer<typeof userCreateFormSchema>) {
-        console.log(values);
+    // Reset form khi sheet mở lại
+    useEffect(() => {
+        if (open) {
+            form.reset();
+            form.clearErrors();
+        }
+        // eslint-disable-next-line react-hook-form/exhaustive-deps
+    }, [open]);
+
+    function onSubmit(values: FormInput) {
+        // Parse values through schema to get output type
+        const parsedValues = userCreateFormSchema.parse(values);
+        console.log(parsedValues);
+        // Sau khi submit thành công, đóng sheet
+        onOpenChange(false);
     }
 
     function onReset() {
@@ -76,9 +102,36 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
         form.clearErrors();
     }
 
+    function handleOpenChange(newOpen: boolean) {
+        // Nếu đang đóng sheet và form đã có thay đổi
+        if (!newOpen && open && form.formState.isDirty) {
+            setShowConfirmDialog(true);
+        } else {
+            onOpenChange(newOpen);
+        }
+    }
+
+    function handleConfirmClose() {
+        setShowConfirmDialog(false);
+        onReset();
+        onOpenChange(false);
+    }
+
+    function handleCancelClose() {
+        setShowConfirmDialog(false);
+    }
+
+    function handleDialogOpenChange(dialogOpen: boolean) {
+        // Nếu đóng dialog bằng cách click ra ngoài hoặc ESC, giữ sheet mở
+        if (!dialogOpen) {
+            setShowConfirmDialog(false);
+        }
+    }
+
     return (
-        <Sheet open={open} onOpenChange={onOpenChange}>
-            <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col">
+        <>
+            <Sheet open={open} onOpenChange={handleOpenChange}>
+                <SheetContent side="right" className="w-full sm:max-w-lg flex flex-col">
                 <SheetHeader className="border-b px-0">
                     <SheetTitle className="text-lg">Add New User</SheetTitle>
                     <SheetDescription className="text-sm">
@@ -237,5 +290,25 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                 </Form>
             </SheetContent>
         </Sheet>
+
+        <AlertDialog open={showConfirmDialog} onOpenChange={handleDialogOpenChange}>
+            <AlertDialogContent variant="error">
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Confirm close form</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        You have unsaved changes. Are you sure you want to close the form? All changes will be lost.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel onClick={handleCancelClose}>
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction onClick={handleConfirmClose}>
+                        Close
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+        </>
     );
 }
