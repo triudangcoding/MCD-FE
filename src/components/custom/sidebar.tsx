@@ -1,36 +1,19 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  User,
-  PanelLeft,
-  LogOut,
-  ChevronDown,
-  PanelLeftClose,
-  Group,
-  Settings,
-  Key,
-  AlertTriangle,
-  Building,
-  ListOrdered,
-  Brush,
-  Contact,
-  Sparkles,
-  Ticket,
-  Calendar,
-  Calculator
-} from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Skeleton } from '../ui/skeleton';
 import { Badge } from '../ui/badge';
 // Removed app-specific BranchSelect usage for mock-only Sidebar
 import { BranchSelect } from '@/components/global/branch-select';
+import menuItems from '@/constants/sidebar.item';
+import { ChevronDown, LogOut, PanelLeft, PanelLeftClose } from 'lucide-react';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -47,22 +30,6 @@ interface SidebarGroupProps {
   defaultExpanded?: boolean;
 }
 
-const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', category: 'main', path: '/' },
-  { icon: ListOrdered, label: 'Order', category: 'main', path: '/orders' },
-  { icon: User, label: 'User', category: 'management', path: '/user' },
-  { icon: Group, label: 'Customer', category: 'management', path: '/customer' },
-  { icon: Building, label: 'Branch', category: 'management', path: '/branch' },
-  { icon: Sparkles, label: 'Service', category: 'management', path: '/service' },
-  { icon: Brush, label: 'Department', category: 'management', path: '/department' },
-  { icon: Ticket, label: 'Voucher', category: 'management', path: '/voucher' },
-  { icon: Calendar, label: 'Schedule', category: 'management', path: '/schedule' },
-  { icon: Contact, label: 'Customer Care', category: 'management', path: '/customer-care' },
-  { icon: Calculator, label: 'Simulator Algorithm', category: 'main', path: '/simulator-algorithm' },
-  { icon: Settings, label: 'Basic Settings', category: 'system', path: '/system/basic' },
-  { icon: Key, label: 'Permission System', category: 'system', path: '/system/permission' },
-  { icon: AlertTriangle, label: 'Danger Zone', category: 'system', path: '/system/danger' },
-];
 
 // Simple grouping without external logic
 const filteredMainItems = menuItems.filter((item) => item.category === 'main');
@@ -94,7 +61,7 @@ function SidebarGroup({ title, items, collapsed, renderMenuItem, defaultExpanded
               </h2>
               <motion.div
                 animate={{ rotate: isExpanded ? 0 : -90 }}
-                transition={{ 
+                transition={{
                   duration: 0.2,
                   ease: [0.4, 0.0, 0.2, 1]
                 }}
