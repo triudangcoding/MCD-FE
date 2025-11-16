@@ -80,36 +80,31 @@ function SidebarGroup({ title, items, collapsed, renderMenuItem, defaultExpanded
 
   return (
     <div className="px-1 ">
-      <AnimatePresence mode="wait">
-        {!collapsed && (
-          <motion.div
-            key="group-header"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
+      {!collapsed && (
+        <div className="transition-opacity duration-150">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={toggleExpanded}
+            className="w-full px-3 py-2 mb-1 h-auto justify-start hover:bg-accent/50 transition-colors duration-200"
           >
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleExpanded}
-              className="w-full px-3 py-2 mb-1 h-auto justify-start hover:bg-accent/50 transition-colors duration-150"
-            >
-              <div className="flex items-center justify-between w-full">
-                <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  {title}
-                </h2>
-                <motion.div
-                  animate={{ rotate: isExpanded ? 0 : -90 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  <ChevronDown className="h-3 w-3 text-muted-foreground" />
-                </motion.div>
-              </div>
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <div className="flex items-center justify-between w-full">
+              <h2 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {title}
+              </h2>
+              <motion.div
+                animate={{ rotate: isExpanded ? 0 : -90 }}
+                transition={{ 
+                  duration: 0.2,
+                  ease: [0.4, 0.0, 0.2, 1]
+                }}
+              >
+                <ChevronDown className="h-3 w-3 text-muted-foreground" />
+              </motion.div>
+            </div>
+          </Button>
+        </div>
+      )}
 
       <motion.div
         animate={{
@@ -117,8 +112,8 @@ function SidebarGroup({ title, items, collapsed, renderMenuItem, defaultExpanded
           opacity: (isExpanded || collapsed) ? 1 : 0
         }}
         transition={{
-          duration: 0.2,
-          ease: "easeOut"
+          duration: collapsed ? 0.15 : 0.25,
+          ease: collapsed ? [0.4, 0.0, 0.6, 1] : [0.4, 0.0, 0.2, 1]
         }}
         className="overflow-hidden"
       >
@@ -180,7 +175,7 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
         size={collapsed ? "icon" : "sm"}
         className={cn(
           "w-full group relative will-change-transform",
-          "transition-all duration-150 ease-out",
+          "transition-all duration-200 ease-[cubic-bezier(0.4,0.0,0.2,1)]",
           collapsed ? "h-8 px-0" : "justify-start h-8 px-3",
           isActive
             ? "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
@@ -197,7 +192,9 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
         )} />
 
         {!collapsed && (
-          <span className="truncate">{item.label}</span>
+          <span className="truncate transition-opacity duration-150">
+            {item.label}
+          </span>
         )}
 
         {/* Tooltip for collapsed state */}
@@ -227,15 +224,25 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
     return menuButton;
   };
 
-  // Animation variants cho sidebar width - đơn giản hóa
+  // Animation variants cho sidebar width - tối ưu cho mượt mà hơn
   const sidebarVariants = {
     expanded: {
       width: isMobile ? 256 : 192, // w-64 : w-48
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.2,
-        ease: [0.4, 0.0, 0.2, 1] as [number, number, number, number]
+        width: {
+          duration: 0.25,
+          ease: [0.4, 0.0, 0.2, 1] as [number, number, number, number]
+        },
+        opacity: {
+          duration: 0.2,
+          ease: [0.4, 0.0, 0.2, 1] as [number, number, number, number]
+        },
+        x: {
+          duration: 0.25,
+          ease: [0.4, 0.0, 0.2, 1] as [number, number, number, number]
+        }
       }
     },
     collapsed: {
@@ -243,8 +250,18 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
       opacity: isMobile ? 0 : 1,
       x: isMobile ? -256 : 0, // Slide out on mobile
       transition: {
-        duration: 0.15,
-        ease: [0.4, 0.0, 0.6, 1] as [number, number, number, number]
+        width: {
+          duration: 0.18,
+          ease: [0.4, 0.0, 0.6, 1] as [number, number, number, number] // Ease out nhanh hơn khi collapse
+        },
+        opacity: {
+          duration: 0.12,
+          ease: [0.4, 0.0, 0.6, 1] as [number, number, number, number]
+        },
+        x: {
+          duration: 0.18,
+          ease: [0.4, 0.0, 0.6, 1] as [number, number, number, number]
+        }
       }
     }
   };
@@ -267,26 +284,21 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
     >
       {/* Header */}
       <div className="flex items-center justify-between px-4 h-14 border-b border-border bg-card/50">
-        <AnimatePresence mode="wait">
-          {!collapsed && (
-            <motion.div
-              key="logo-section"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="flex items-center space-x-3"
-            >
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-primary-foreground font-bold text-sm">SM</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-foreground font-semibold text-sm">ISIMILE</span>
-                <span className="text-muted-foreground text-xs">Dashboard</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!collapsed && (
+          <div className="flex items-center space-x-3 transition-opacity duration-150">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+              <span className="text-primary-foreground font-bold text-sm">SM</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-foreground font-semibold text-sm">
+                ISIMILE
+              </span>
+              <span className="text-muted-foreground text-xs">
+                Dashboard
+              </span>
+            </div>
+          </div>
+        )}
 
         {!isMobile && (
           <Button
@@ -363,82 +375,57 @@ export function Sidebar({ collapsed, onCollapse, isMobile }: SidebarProps) {
             </span>
           </div>
 
-          <AnimatePresence mode="wait">
-            {!collapsed && (
-              <motion.div
-                key="user-info"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15 }}
-                className="flex-1 min-w-0"
-              >
-                <p className="text-sm font-medium text-foreground truncate">
-                  {user?.fullName || 'User'}
-                </p>
+          {!collapsed && (
+            <div className="flex-1 min-w-0 transition-opacity duration-150">
+              <p className="text-sm font-medium text-foreground truncate">
+                {user?.fullName || 'User'}
+              </p>
 
-                <p className="text-xs text-muted-foreground truncate">
-                  {user?.phone || 'No phone'}
-                </p>
-                <Badge variant="secondary" className="font-medium text-xs px-2 py-0">
-                  Member
-                </Badge>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              <p className="text-xs text-muted-foreground truncate">
+                {user?.phone || 'No phone'}
+              </p>
+              <Badge variant="secondary" className="font-medium text-xs px-2 py-0">
+                Member
+              </Badge>
+            </div>
+          )}
 
-          <AnimatePresence mode="wait">
-            {!collapsed && (
-              <motion.div
-                key="logout-expanded"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15 }}
+          {!collapsed && (
+            <div className="transition-opacity duration-150">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleLogout}
+                className="h-8 w-8 text-muted-foreground hover:text-red-600 hover:bg-red-50 transition-colors duration-200"
+                aria-label="Sign out"
               >
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleLogout}
-                  className="h-8 w-8 text-muted-foreground hover:text-red-600 hover:bg-red-50"
-                  aria-label="Sign out"
-                >
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
         </div>
 
-        <AnimatePresence mode="wait">
-          {collapsed && !isMobile && (
-            <motion.div
-              key="logout-collapsed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleLogout}
-                      className="w-full h-8 mt-2 text-muted-foreground hover:text-red-600 hover:bg-red-50"
-                    >
-                      <LogOut className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="right" className="font-medium">
-                    Sign out
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {collapsed && !isMobile && (
+          <div className="transition-opacity duration-150">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={handleLogout}
+                    className="w-full h-8 mt-2 text-muted-foreground hover:text-red-600 hover:bg-red-50 transition-colors duration-200"
+                  >
+                    <LogOut className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="right" className="font-medium">
+                  Sign out
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
 
         {collapsed && isMobile && (
           <Button
