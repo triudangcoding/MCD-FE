@@ -36,6 +36,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { userCreateFormSchema } from "@/pages/users/validation/create-user.validation";
 
 interface CreateUserFormProps {
     open: boolean;
@@ -43,27 +44,19 @@ interface CreateUserFormProps {
 }
 
 export default function CreateUserForm({ open, onOpenChange }: CreateUserFormProps) {
-    const formSchema = z.object({
-        "text-input-1": z.string().min(1, { message: "Fullname is required" }),
-        "text-input-0": z
-            .string()
-            .min(1, { message: "This field is required" })
-            .includes("@", { message: 'Must contain "@"' }),
-        "date-0": z.date().optional(),
-        "password-input-0": z.string().min(1, { message: "Password is required" }),
-    });
 
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+
+    const form = useForm<z.infer<typeof userCreateFormSchema>>({
+        resolver: zodResolver(userCreateFormSchema),
         defaultValues: {
-            "text-input-1": "",
-            "text-input-0": "",
-            "date-0": new Date("2025-11-16T09:26:29.583Z"),
-            "password-input-0": "",
+            fullname: "",
+            email: "",
+            dateOfBirth: undefined,
+            password: "",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: z.infer<typeof userCreateFormSchema>) {
         console.log(values);
     }
 
@@ -88,10 +81,10 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                         onReset={onReset}
                         className="space-y-8 @container flex-1 overflow-y-auto"
                     >
-                        <div className="grid grid-cols-12 gap-4">
+                        <div className="grid grid-cols-12 gap-4 mx-1">
                             <FormField
                                 control={form.control}
-                                name="text-input-1"
+                                name="fullname"
                                 render={({ field }) => (
                                     <FormItem className="col-span-12 col-start-auto">
                                         <FormLabel>Fullname</FormLabel>
@@ -113,7 +106,7 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                             />
                             <FormField
                                 control={form.control}
-                                name="text-input-0"
+                                name="email"
                                 render={({ field }) => (
                                     <FormItem className="col-span-12 col-start-auto">
                                         <FormLabel>Email</FormLabel>
@@ -121,7 +114,7 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                                             <InputGroup>
                                                 <InputGroupInput
                                                     placeholder="Your email"
-                                                    type="text"
+                                                    type="email"
                                                     {...field}
                                                 />
                                                 <InputGroupAddon align="inline-start">
@@ -135,7 +128,7 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                             />
                             <FormField
                                 control={form.control}
-                                name="date-0"
+                                name="dateOfBirth"
                                 render={({ field }) => (
                                     <FormItem className="col-span-12 col-start-auto">
                                         <FormLabel>Date of birth</FormLabel>
@@ -172,7 +165,7 @@ export default function CreateUserForm({ open, onOpenChange }: CreateUserFormPro
                             />
                             <FormField
                                 control={form.control}
-                                name="password-input-0"
+                                name="password"
                                 render={({ field }) => (
                                     <FormItem className="col-span-12 col-start-auto">
                                         <FormLabel>Password</FormLabel>
