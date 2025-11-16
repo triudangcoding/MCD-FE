@@ -4,7 +4,7 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', category: 'main', path: '/' },
+    { icon: LayoutDashboard, label: 'Dashboard', category: 'main', path: '/dashboard/overview' },
     { icon: User, label: 'Users', category: 'management', path: '/dashboard/users' },
 ];
 

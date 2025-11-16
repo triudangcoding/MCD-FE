@@ -3,6 +3,7 @@ import RootLayout from '@/layouts/RootLayout';
 import DashboardLayout from '@/layouts/dashboard.layout';
 import UsersManagementPage from '@/pages/users';
 import LoginPage from '@/pages/auth/login.page';
+import OverviewPage from '@/pages/overview';
 export const routes: RouteObject[] = [
   {
     path: '/',
@@ -19,6 +20,10 @@ export const routes: RouteObject[] = [
           {
             path: 'users',
             element: <UsersManagementPage />,
+          },
+          {
+            path: 'overview',
+            element: <OverviewPage />,
           }
         ]
       }
