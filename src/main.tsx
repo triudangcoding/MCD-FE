@@ -8,7 +8,6 @@ import { ThemeProvider } from './providers/theme-provider'
 import { PreloaderProvider } from './contexts/PreloaderContext'
 import { Toaster } from "@/components/custom/sonner"
 
-// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

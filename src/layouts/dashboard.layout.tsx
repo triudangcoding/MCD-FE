@@ -1,11 +1,11 @@
-import { Sidebar } from "@/components/custom/Sidebar";
-import { Navbar } from "@/components/global/NavBar";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent } from "@/components/ui/card";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Outlet } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Sidebar } from "@/components/custom/sidebar";
+import { Navbar } from "@/components/global/navbar";
 
 const SIDEBAR_STORAGE_KEY = "sidebar_collapsed_state";
 const NAVBAR_HEIGHT = 64; // 16 * 4 = 64px (h-16)
@@ -187,9 +187,9 @@ const DashboardLayout: React.FC = () => {
         {/* Main content với responsive layout */}
         <motion.main
           className={cn(
-            "flex-1 min-h-0 overflow-hidden pt-2",
-            "pb-0",
-            "px-3"
+            "flex-1 min-h-0 overflow-hidden pt-1",
+            "pb-2",
+            "px-1"
           )}
           animate={showSidebar && !isMobile ? "managementMode" : "workingMode"}
           variants={
@@ -239,11 +239,13 @@ const DashboardLayout: React.FC = () => {
                     : "100%",
               }}
             >
-              <ScrollArea className="h-full w-full" isHiddenScrollBar={true}>
-                <div className={cn("h-[calc(100vh-6rem)] w-full") }>
-                  <Outlet />
-                </div>
-              </ScrollArea>
+              <div className="h-full w-full flex flex-col pb-4">
+                <Card className="bg-card text-card-foreground gap-2 rounded-xl border py-4 h-full w-full flex flex-col shadow-sm">
+                  <CardContent className="flex flex-col min-h-0 px-4 flex-1 overflow-hidden">
+                    <Outlet />
+                  </CardContent>
+                </Card>
+              </div>
             </motion.div>
           </div>
         </motion.main>
