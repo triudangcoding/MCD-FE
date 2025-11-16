@@ -10,6 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { FilterPopover, type FilterItem } from '@/components/custom/filter.popover';
 import { USER_FILTER_OPTIONS } from '@/pages/users/user.constant';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import CreateUserForm from '@/pages/users/forms/create-user.form';
 
 // Mock data types
 interface User {
@@ -383,6 +384,7 @@ export default function UsersManagementPage() {
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [filterList, setFilterList] = useState<FilterItem[]>([]);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // Define filter options
   // Helper function to check if a filter matches
@@ -431,6 +433,10 @@ export default function UsersManagementPage() {
     return 'outline';
   };
 
+  const handleOpenSheet = () => {
+    setIsSheetOpen(true);
+  };
+
   return (
     <div className="h-full flex flex-col">
       {/* Search and Filters - Fixed */}
@@ -455,7 +461,7 @@ export default function UsersManagementPage() {
               open={isFilterOpen}
               onOpenChange={setIsFilterOpen}
             />
-            <Button size="sm" className="w-full sm:w-auto">
+            <Button size="sm" className="w-full sm:w-auto" onClick={handleOpenSheet}>
               <Plus className="h-4 w-4" />
               Add new user
             </Button>
@@ -650,6 +656,9 @@ export default function UsersManagementPage() {
           </div>
         </div>
       </div>
+
+      {/* Sheet Form */}
+      <CreateUserForm open={isSheetOpen} onOpenChange={setIsSheetOpen} />
     </div>
   );
 }
